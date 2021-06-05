@@ -7,11 +7,39 @@ import { createStore } from "redux";
 
 // STORE -> GLOBALIZED STATE
 
-// ACTION -> E.G., INCREMENT
+// ACTION -> DESCRIBES WHAT YOU WANT TO DO (E.G., INCREMENT) -> A SIMPLE FUNCTION THAT RETURNS AN OBJECT
+const increment = () => {
+  return {
+    type: "INCREMENT"
+  }
+};
+const decrement = () => {
+  return {
+    type: "DECREMENT"
+  }
+};
 
 // REDUCER -> MODIFIES STATE DEPENDING ON THE GIVEN ACTION
+const counter = (state = 0, action) => {
+  switch(action.type) {
+    case "INCREMENT":
+      return state + 1;
+    case "DECREMENT":
+      return state - 1;
+    default:
+      return state;
+  }
+};
 
-// DISPATCH -> "Dispatch this action to the reducer"
+let store = createStore(counter)
+
+// Display it in the console
+store.subscribe(() => console.log(store.getState()));
+
+// DISPATCH -> "Dispatch <action> to the reducer"
+store.dispatch(increment());
+store.dispatch(decrement());
+store.dispatch(decrement());
 
 ReactDOM.render(
   <React.StrictMode>
